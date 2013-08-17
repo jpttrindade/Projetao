@@ -1,0 +1,39 @@
+{% extends "base_codigo_gerado.html" %}
+
+
+{% block corpo %}
+
+
+
+
+
+
+	<section> 
+		<nav class="clear"> <br />
+			<a href="/gerar_codigo/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
+					<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
+		</nav>
+		<article class="gerarCodeOk">
+			<h1>Códigos Gerados</h1>
+		</article>
+		<form action="" method="post">
+			<article class="contentCodes">
+				{% csrf_token %}
+					<ul>
+						{% for codigo in lista_codigos %}
+						{{codigo.cod}} - {{ codigo.pontos }}
+						<input type="hidden" name="list" value="{{codigo.cod}} - {{ codigo.pontos }}"/> <br/>
+						{% empty %}
+							<li> Nenhum codigo foi gerado </li>
+						{% endfor %}
+					</ul>
+			</article>
+			<article class="opcaoCodesPrintAndSave">
+				<label>Página 1 de 1</label>
+				<input type="submit" name="saveCode" value="Salvar" id="saveCode"/>
+			</article>
+		</form>	
+
+
+	</section>		
+{% endblock %}

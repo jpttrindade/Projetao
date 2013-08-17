@@ -1,0 +1,92 @@
+/* RESET */
+*{padding:0;margin:0;text-decoration:none;}
+html{
+	background-color: #F6F4F0;
+}
+body{
+	font-size: 12px;
+	font-family: Helvetica, Verdana, Gevana, Arial, sans-serif;
+	width: 800px;
+	height:600px;
+	margin: 0 auto;	
+}
+header{
+	color: #666;
+	height: 120px;
+	background-color: #f1f1f1;
+	border-bottom: 2px solid #f2a500;
+}
+header img {
+	float: left;
+	margin-left: 5px;
+	width: 30%;
+}
+header .nomeProfessor{
+	text-align:right;
+	font-size: 14px;
+	padding-top: 94px;
+	margin-right: 100px;
+}
+.sairPrize{
+	float:right;
+	position: absolute;
+	text-decoration:underline;
+	color:blue;
+	font-size: 14px;
+	margin-left: 60px;
+	padding-bottom: 20px;
+}
+section{
+	width: 800px;
+	height: 440px;
+	display: inline-block;
+	float: left;
+	background-color: #fff;
+}
+/* Menu */
+li {
+	list-style:none;
+}
+#menuPrincipalProfessor{
+	margin-top: 80px;
+}
+#menuPrincipalProfessor li{
+	background: #666;
+	width: 500px;
+	text-align:center;
+	margin: 0 auto;
+}
+#menuPrincipalProfessor li a {
+	color: #fff;
+	margin-bottom: 12px;
+	font-size: 16px;
+	padding: 10px 50px 10px 50px;
+	display: block;
+	transition: all 0.3s linear; /*anima��o*/
+}
+#menuPrincipalProfessor li a:hover {
+	background: #333;
+	color: #fff;
+}
+/*
+.subMenu {
+	background: #666;
+	z-index: 10px;
+}
+.subMenu li {
+	float:none;
+	clear:both;
+}
+*/
+footer {
+	width: 800px;
+	height: 40px;
+	clear: both;
+	float: none;
+	background-color: #f2a500;
+}
+footer p {
+	color: #fff;
+	margin:10px;
+	padding:10px;
+}

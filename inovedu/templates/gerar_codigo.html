@@ -1,0 +1,31 @@
+{% extends "base_gerar_codigo.html" %}
+
+
+{% block corpo %}
+<section> 
+				<nav class="clear"> <br />
+					<a href="/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
+					<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
+				</nav>
+				<article class="gerarCodeTitle">
+					<h1>Gerar códigos de Pontuação</h1>
+				</article>
+				<article>
+					<form action="" method="post">
+						{% csrf_token %}
+						<table class="tablePontos">
+  							<tr class="descTableEl">
+    							<th><h1>{{form.pontos.label_tag}}</h1></th>
+    							<th><h1>{{form.qtd.label_tag}}. de códigos</h1></th>
+  							</tr>
+  							<tr>
+    							<td>{{form.pontos}}</td>
+    							<td>{{form.qtd}}</td>
+    							<td><input type="submit" name="gerarRegular" value="Gerar" id="button_gerar"/></td>
+  							</tr>
+						</table>
+					</form>	
+				</article>
+			</section>		
+
+{% endblock %}

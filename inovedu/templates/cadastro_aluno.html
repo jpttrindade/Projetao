@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+
+{% block corpo %}
+<div id="cadAluno">
+
+	{% if form.errors %}
+        	<p style="color: red;">
+            	Por favor, corrigir  erro{{form.errors|pluralize}}!
+            </p>
+   	{% endif %}
+
+	<form action="" method="post">
+		{% csrf_token %}
+		
+		<div id="erros">
+			{{form.primeiro_nome.errors}}
+			{{form.primeiro_nome.label}} {{ form.primeiro_nome }}
+			{{form.ultimo_nome.errors}}
+			{{form.ultimo_nome.label}} {{ form.ultimo_nome }}
+			{{form.email.errors}}
+			{{form.email.label}} {{form.email}}
+			{{form.login.errors}}
+			{{form.login.label}} {{form.login}}
+			{{form.senha.errors}}
+			{{form.senha.label}} {{form.senha}}
+			{{form.confirme_senha.label}}  {{form.confirme_senha}}
+		</div>
+
+		<button type="submit">Cadastrar</button>
+	</form>
+</div>
+{% endblock %}

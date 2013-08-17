@@ -1,4 +1,3 @@
-*.log
-*.pot
+ENV2
 *.pyc
-local_settings.py
+staticfiles

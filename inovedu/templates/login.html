@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+	{% block corpo %}
+
+	{% if form.errors %}
+		{{ form.non_fields_errors }}
+	{% endif %}
+
+ <div class = "container">
+		
+			<section> 
+				<article>
+					<img src="/static/image/img_login.png" />
+				</article>
+			</section>
+			
+			<aside>
+				<form action="." method="post">
+					{% csrf_token %}
+					{{ form.username.label_tag }} <br> {{ form.username }} <br>
+					{{ form.password.label_tag }} <br> {{ form.password }} <br>
+					<input type="submit" name="entrar" value="Entrar" class="entrar"/> <br /> <br />
+					<p><a href="/cadastrar_aluno" class="cadastreseClass">Cadastre-se</a></p>
+				</form>
+			</aside>
+				
+		
+</div>
+
+
+{% endblock %}
+

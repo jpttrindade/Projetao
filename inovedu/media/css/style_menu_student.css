@@ -1,0 +1,113 @@
+/* RESET */
+*{padding:0;margin:0;text-decoration:none;}
+html{
+	background-color: #F6F4F0;
+}
+body{
+	font-size: 12px;
+	font-family: Helvetica, Verdana, Gevana, Arial, sans-serif;
+	width: 800px;
+	height:600px;
+	margin: 0 auto;	
+}
+header{
+	color: #fff;
+	height: 120px;
+	background-color: #3fc147;
+}
+header h1 {
+	font-size: 42px;
+	padding-top:30px;
+	margin-left: 20px;
+}
+header .nomeProfessor{
+	text-align:right;
+	font-size: 14px;
+	margin-right: 26px;
+}
+header p a{
+	text-decoration:underline;
+	color:blue;
+	text-align:right;
+	font-size: 14px;
+	margin-left: 750px;
+
+}
+section{
+	width: 800px;
+	height: 440px;
+	display: inline-block;
+	float: left;
+	background-color: #fff;
+}
+nav {
+	height:35px;
+	background-color: #912eb2;
+	padding: 3px;
+}
+nav a{
+	color: #fff;
+	text-decoration:underline;
+	padding: 2px;
+	font-size: 14px;
+	margin-left: 10px;
+}
+
+.gerarCodeTitle{
+	margin: 20px 0 0 20px;
+	font-size:30px;
+	height: 40px;
+	width: 80px;
+	border: 1px solid #777;
+}
+
+#pontos{
+	margin: 5px 0 0 20px;
+	font-size:14px;
+}
+
+.gerarCodeDescription{
+	margin: 20px 0 0 20px;
+	width: 300px;
+	border: 2px solid #3188f7;
+	background-color: #629fed;
+	
+}
+.gerarCodeDescription p{
+	margin: 20px 0 5px 20px;
+	font-size: 14px;
+}
+.gerarCodeDescription input[type="text"] {
+	margin: 0px 0 5px 20px;
+	width: 100px;
+	padding:3px;
+}
+
+.gerarCodeDescription input[type="submit"] {
+	margin: 0px 0 5px 20px;
+	width: 100px;
+	padding:3px;
+}
+
+.tablePonto{
+	margin: 20px 0 5px 20px;
+	
+}
+.tablePonto input[type="submit"] {
+	margin: 5px;
+	padding:5px;
+	width: 200px;
+	font-size: 16px;
+}
+footer {
+	width: 800px;
+	height: 40px;
+	clear: both;
+	float: none;
+	background-color: #dbc426;
+}
+footer p {
+	color: #fff;
+	margin:10px;
+	padding:10px;
+}
