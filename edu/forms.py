@@ -19,7 +19,7 @@ class FormAluno(forms.Form):
 	primeiro_nome = forms.CharField(widget=forms.TextInput, label='Primeiro Nome');
 	ultimo_nome = forms.CharField(widget=forms.TextInput, label='Último Nome');
 	login = forms.CharField(max_length=30, min_length=4);
-	email = forms.EmailField(max_length=75, attrs={'placeholder': 'example@email.com'})
+	email = forms.EmailField(max_length=75)
 	senha = forms.CharField(widget=forms.PasswordInput, min_length=5)
 	confirme_senha = forms.CharField(widget=forms.PasswordInput, min_length=5)
 

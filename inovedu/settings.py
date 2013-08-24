@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'south',
     'edu',
 )
 
@@ -181,3 +182,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
+try:
+    from .local import DEBUG,TEMPLATE_DEBUG,DATABASES ##Vamos importar dados do arquivo local.py que NAO esta no git ( colocar ele no .gitignore)logo nao vai pro heroku
+except ImportError:
+    pass

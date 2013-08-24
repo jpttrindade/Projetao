@@ -1,11 +1,17 @@
+# -*- coding: utf-8 -*- 
 from django.db import models
 import django.contrib.auth.models
 from random import choice
 
 # Create your models here.
+class Colegio(models.Model):
+	nome=models.CharField(max_length=16)
+	def __unicode__(self):
+		return self.nome
+
 class Aluno (django.contrib.auth.models.User):
-	pontos=models.IntegerField()
-	
+	turma = models.ManyToManyField('Turma',through='TurmaAluno')
+	pontos=models.IntegerField(default=0)
 	def __unicode__(self):
 		return self.username
 
@@ -30,16 +36,8 @@ class Aluno (django.contrib.auth.models.User):
 			pass
 		return retorno
 
-class Recompensa (models.Model):
-	preco=models.IntegerField()
-	descricao=models.CharField(max_length=140)
-	nome=models.CharField(max_length=30)
-	aluno=models.ForeignKey(Aluno, null=True)
-
-	def __unicode__(self):
-		return self.nome
- 
 class Professor (django.contrib.auth.models.User):
+	turma = models.ManyToManyField('Turma',through='TurmaProfessor')
 	def __unicode__(self):
 		return self.username
 
@@ -58,22 +56,37 @@ class Professor (django.contrib.auth.models.User):
 			novoCod.save()
 			l.append(novoCod)
 		return l
-	
 
-	
-class Disciplina (models.Model):
-	nome=models.CharField(max_length=30)
-	professor = models.ForeignKey(Professor)
-	def __unicode__(self):
-		return self.nome
 
+
+class TurmaAluno (models.Model): # -- verificar o que deve ser único..
+	aluno=models.ForeignKey(Aluno)
+	turma=models.ForeignKey('Turma')
+
+class TurmaProfessor (models.Model):
+	disciplina = models.CharField(max_length=16)
+	professor=models.ForeignKey(Professor)
+	turma = models.ForeignKey('Turma')
+
+class Turma (models.Model):
+	nome=models.CharField(max_length=16)
+	colegio = models.ForeignKey(Colegio)
+ 
 class Codigo (models.Model):
-	cod=models.CharField(max_length=15, null=False)
+	cod=models.CharField(max_length=15)
 	status=models.BooleanField()
-	professor = models.ForeignKey(Professor)
-	aluno = models.ForeignKey(Aluno,null=True)
-	pontos = models.IntegerField(null=False)
+	professor = models.ForeignKey(Professor,null=True,blank=True)
+	aluno = models.ForeignKey(Aluno,null=True,blank=True)
+	pontos = models.IntegerField()
+	turma = models.ForeignKey(Turma,null=True,blank=True)
+	atividade = models.ForeignKey('AtvTurmaProf',null=True,blank=True)
 	def __unicode__(self):
 		return self.cod
+class Atividade (models.Model):
+	nome = models.CharField(max_length=16)
+	turma_professor = models.ManyToManyField(TurmaProfessor,through='AtvTurmaProf')
 
-
+class AtvTurmaProf (models.Model):
+	atividade = models.ForeignKey(Atividade)
+	turmaprof = models.ForeignKey(TurmaProfessor)
+	pontos = models.IntegerField()
