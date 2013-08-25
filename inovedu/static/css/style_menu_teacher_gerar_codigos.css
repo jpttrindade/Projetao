@@ -1,0 +1,112 @@
+/* RESET */
+*{padding:0;margin:0;text-decoration:none;}
+html{
+	background-color: #F6F4F0;
+}
+body{
+	font-size: 12px;
+	font-family: Helvetica, Verdana, Gevana, Arial, sans-serif;
+	width: 800px;
+	height:600px;
+	margin: 0 auto;	
+}
+header{
+	color: #666;
+	height: 120px;
+	background-color: #f1f1f1;
+	border-bottom: 2px solid #f2a500;
+}
+header img {
+	float: left;
+	margin-left: 5px;
+	width: 30%;
+}
+header .nomeProfessor{
+	text-align:right;
+	font-size: 14px;
+	padding-top: 94px;
+	margin-right: 100px;
+}
+.sairPrize{
+	float:right;
+	position: absolute;
+	text-decoration:underline;
+	color:blue;
+	font-size: 14px;
+	margin-left: 60px;
+	padding-bottom: 20px;
+}
+section{
+	width: 800px;
+	height: 440px;
+	display: inline-block;
+	float: left;
+	background-color: #fff;
+}
+nav {
+	height:35px;
+	background-color: #898989;
+	padding: 3px;
+}
+nav a{
+	color: #fff;
+	text-decoration:underline;
+	padding: 2px;
+	font-size: 14px;
+	margin-left: 10px;
+}
+.gerarCodeTitle {
+	height: 20px;
+	border-bottom: 1px solid #777;
+}
+.gerarCodeTitle h1 {
+	margin: 20px 0 0 20px;
+	font-size:16px;
+}
+.codeDescriptionTitle p{
+	margin: 20px 20px 5px 20px;
+	font-size: 14px;
+}
+.processoGerarCode {
+	width: 500px;
+	background-color: #c1c1c1;
+	padding: 10px;
+	margin: 50px 10px 0px 150px;
+}
+.selectAtvCode {
+	width: 500px;
+}
+.selectAtvCode select {
+	width: 450px;
+	height: 30px;
+	margin-left: 20px;
+}
+.numberCodes {
+	margin-top: 20px;
+	margin-left:20px;
+}
+.numberCodes label {
+	font-size: 14px;
+}
+.numberCodes input[type="number"]{
+	width: 70px;
+	height: 30px;
+	margin-left: 3px;
+}
+#gerarCodeAtv {
+	margin: 20px 0px 0px 250px;
+	width: 300px;
+	height: 40px;
+}
+footer {
+	width: 800px;
+	height: 40px;
+	clear: both;
+	float: none;
+	background-color: #f2a500;
+}
+footer p {
+	color: #fff;
+	margin:10px;
+	padding:10px;
+}
