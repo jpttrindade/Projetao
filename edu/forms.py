@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*- 
 from django.forms import ModelForm
 from edu.models import Codigo
-from edu.models import Aluno
+from edu.models import Aluno, Colegio, Turma
 from django import forms
 from django.contrib.auth.models import User
 #from django.utils.translation import ugettext as _
@@ -23,6 +23,11 @@ class FormAluno(forms.Form):
 	senha = forms.CharField(widget=forms.PasswordInput, min_length=5)
 	confirme_senha = forms.CharField(widget=forms.PasswordInput, min_length=5)
 
+	def __init__(self, *args, **kwargs):
+		super(FormAluno, self).__init__(*args, **kwargs)
+		self.fields['colegio'] = forms.ModelChoiceField(queryset=Colegio.objects.all() )
+	# 	self.fields['turma'] = forms.ModelChoiceField(queryset=Turma.objects.filter(colegio= kwargs.pop('colegio', None)))
+	# 	pass
 	def clean_login(self):
 		if User.objects.filter(username=self.cleaned_data['login']).count():
 			raise forms.ValidationError('login já cadastrado!')

@@ -67,26 +67,36 @@ class TurmaProfessor (models.Model):
 	disciplina = models.CharField(max_length=16)
 	professor=models.ForeignKey(Professor)
 	turma = models.ForeignKey('Turma')
+	def __unicode__(self):
+		return "%s:%s" % (self.professor.username , self.turma.nome)
 
 class Turma (models.Model):
 	nome=models.CharField(max_length=16)
 	colegio = models.ForeignKey(Colegio)
+	def __unicode__(self):
+		return self.nome
  
 class Codigo (models.Model):
 	cod=models.CharField(max_length=15)
 	status=models.BooleanField()
-	professor = models.ForeignKey(Professor,null=True,blank=True)
 	aluno = models.ForeignKey(Aluno,null=True,blank=True)
-	pontos = models.IntegerField()
-	turma = models.ForeignKey(Turma,null=True,blank=True)
-	atividade = models.ForeignKey('AtvTurmaProf',null=True,blank=True)
+	atividade = models.ForeignKey('AtividadeColegio')
+	turmaprof = models.ForeignKey('TurmaProfessor')
+	# atividade = models.ForeignKey('AtvTurmaProf',null=True,blank=True)
 	def __unicode__(self):
 		return self.cod
+
 class Atividade (models.Model):
 	nome = models.CharField(max_length=16)
-	turma_professor = models.ManyToManyField(TurmaProfessor,through='AtvTurmaProf')
-
-class AtvTurmaProf (models.Model):
+	colegio = models.ManyToManyField(Colegio,through='AtividadeColegio')
+	# turma_professor = models.ManyToManyField(TurmaProfessor,through='AtvTurmaProf')
+	def __unicode__(self):
+		return self.nome
+class AtividadeColegio (models.Model):
 	atividade = models.ForeignKey(Atividade)
-	turmaprof = models.ForeignKey(TurmaProfessor)
+	colegio = models.ForeignKey(Colegio)
 	pontos = models.IntegerField()
+# class AtvTurmaProf (models.Model):
+# 	atividade = models.ForeignKey(Atividade)
+# 	turmaprof = models.ForeignKey(TurmaProfessor)
+# 	pontos = models.IntegerField()
