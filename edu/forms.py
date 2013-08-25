@@ -25,8 +25,8 @@ class FormAluno(forms.Form):
 
 	def __init__(self, *args, **kwargs):
 		super(FormAluno, self).__init__(*args, **kwargs)
-		self.fields['colegio'] = forms.ModelChoiceField(queryset=Colegio.objects.all() )
-	# 	self.fields['turma'] = forms.ModelChoiceField(queryset=Turma.objects.filter(colegio= kwargs.pop('colegio', None)))
+		self.fields['colegio'] = forms.ModelChoiceField(queryset=Colegio.objects.all(), empty_label="Selecione")
+		#self.fields['turma'] = forms.ModelChoiceField(queryset=Turma.objects.all())
 	# 	pass
 	def clean_login(self):
 		if User.objects.filter(username=self.cleaned_data['login']).count():

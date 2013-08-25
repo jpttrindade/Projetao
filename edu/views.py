@@ -5,6 +5,11 @@ from edu.models import Aluno
 from edu.models import Professor
 from django.template import RequestContext
 from edu.models import Codigo
+from edu.models import TurmaAluno
+
+from edu.models import Colegio
+from edu.models import Turma
+
 
 from edu.forms import FormCodigo
 from edu.forms import FormAluno
@@ -88,10 +93,14 @@ def cadastrar_aluno(request):
 		form = FormAluno(request.POST)
 		if form.is_valid():
 			dados = form.cleaned_data
+			colegio = Colegio.objects.get(nome=dados['colegio'])
+			turma = Turma.objects.get(colegio=colegio)
 			novo_aluno = Aluno(username=dados['login'], first_name=dados['primeiro_nome'],
 						last_name=dados['ultimo_nome'], email=dados['email'], pontos=0)
 			novo_aluno.set_password(str(dados['senha']))
 			novo_aluno.save()
+			turma_aluno = TurmaAluno(aluno=novo_aluno, turma=turma)
+			turma_aluno.save()
 
 			return HttpResponseRedirect('/login/')
 		c['form']= form

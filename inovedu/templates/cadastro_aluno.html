@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
+{% block head %}
+
+	<script type="text/javascript">
+		function send_request(){
+  			$.get(location.href, function(data){
+    			$("#output").html(data);
+  			});
+		}
+	</script>
+
+{% endblock %}
+
 
 {% block corpo %}
 <div id="cadAluno">
@@ -26,10 +38,13 @@
 			{{form.senha.label}} {{form.senha}}
 			{{form.confirme_senha.label}}  {{form.confirme_senha}}
 
-			{{form.colegio.errors}}
-			{{form.colegio.label}} {{ form.colegio }}
-			{{form.turma.errors}}
-			{{form.turma.label}} {{ form.turma }}
+
+			<div id="output">
+				{{form.colegio.errors}}
+				{{form.colegio.label}} {{ form.colegio }}
+				{{form.turma.errors}}
+				{{form.turma.label}} {{ form.turma }}
+			</div>
 		</div>
 
 		<button type="submit">Cadastrar</button>
