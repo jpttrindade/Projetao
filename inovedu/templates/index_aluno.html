@@ -1,4 +1,4 @@
-{% extends 'base_index_aluno.html' %}
+{% extends 'base_aluno.html' %}
 
 
 {% block js %}
@@ -10,13 +10,51 @@
 
 {% endblock %}
 
-
 {% block corpo %}
 
 	<section> 
 		<nav class="clear"> <br />
+			<a href="/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
+					<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
+		</nav>
+		
+		<article>
+			<h1 class="gerarCodeTitle">{{ aluno.pontos }}</h1>
+			<p id= "pontos">PONTOS</p>
+		</article>
+		
+		<aside class="alunoUsarPontos">
+			<article class="gerarCodeDescription">
+				<p>Receber pontos</p>
+	<!-- 			<input type="text" name="Receber pontos" />
+				<input type="submit" name="gerarOtimo" value="OK" id="button_gerar"/> -->
+
+				<form action="" method="post">
+					{% csrf_token %}
+					{{ form.codigo }} 
+					<input type="submit" name="gerarOtimo" value="OK" id="button_gerar" onClick="submeter();"/>	
+			</form>
+			</article>
+			<article class="verDesempenhoAl">
+   				<a href="menu_student_ver_desempenho.html"><input type="submit" name="gerarOtimo" value="Ver desempenho" id="button_gerar"/></a>
+			</article>
+			<article class="tablePonto">
+   				<input type="submit" name="gerarOtimo" value="Ranking" id="button_gerar"/>
+			</article>
+		</aside>
+		<article>
+			<img src="/static/image/avatar_male_black.jpeg" id="avatarImg"/>
+		</article>
+		<article class="trocarSeusPontos">
+    		<input type="submit" name="gerarOtimo" value="Trocar seus pontos" id="button_trocar"/>
+		</article>
+	</section>
+
+<!-- <section> 
+
+		<nav class="clear"> <br />
 				<a href="/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
-			<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
+
 		</nav>
 		<article>
 			<h1 class="gerarCodeTitle">{{ aluno.pontos }}</h1>
@@ -35,6 +73,10 @@
 		<article class="tablePonto">
     		<input type="submit" name="gerarOtimo" value="troque seus pontos" id="button_gerar"/>
 		</article>
-	</section>		
+	</section>	
+ -->
+
+
+
 
 {% endblock %}

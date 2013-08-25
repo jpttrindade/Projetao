@@ -27,6 +27,23 @@ header .nomeProfessor{
 	padding-top: 94px;
 	margin-right: 100px;
 }
+
+#imputbutton{
+	width: 350px;
+	height: 40px;
+	margin: 13px 0px 0px 0px;
+	alignment-adjust: central;
+}
+
+.information{
+	font-style: bold;
+	margin: 10px 0px;
+	font-size: 13px;
+	color: #222;
+	
+	
+	
+}
 .sairPrize{
 	float:right;
 	position: absolute;
@@ -51,23 +68,20 @@ li {
 	margin-top: 80px;
 }
 #menuPrincipalProfessor li{
-	background: #666;
+
 	width: 500px;
 	text-align:center;
 	margin: 0 auto;
 }
 #menuPrincipalProfessor li a {
 	color: #fff;
-	margin-bottom: 12px;
 	font-size: 16px;
-	padding: 10px 50px 10px 50px;
+	padding: 0px 50px 0px 50px;
 	display: block;
 	transition: all 0.3s linear; /*anima��o*/
 }
-#menuPrincipalProfessor li a:hover {
-	background: #333;
-	color: #fff;
-}
+
+
 /*
 .subMenu {
 	background: #666;

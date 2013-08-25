@@ -1,27 +1,26 @@
-{% extends 'base_index_professor.html' %}
-
+{% extends 'base_professor.html' %}
 
 	{% block corpo %}
 
-	<section> 
-		<nav class="clear">
-			<ul id="menuPrincipalProfessor">
-
-				<li><a href="/gerar_codigo/" alt="Ir para Pontuação" title="Ir para Pontuação" tabindex="1">Gerar código de pontuação</a></li><br />
-				<li><a href="#" alt="Ir para Pontuação" title="Ir para Pontuação" tabindex="2">Pontuar Manualmente</a></li> <br />
-							<!--ul class="subMenu">
+		<section> 
+			<nav class="clear">
+				<ul id="menuPrincipalProfessor">
+				
+					<li><a href="#" alt="definir atividades." title="Definir Atividades."><input type="submit" name="buscarDadosTurmaAluno" value="Definir Atividades" id="imputbutton"/></a></li>
+					<li><p class="information">Defina as atividades que você vai pontuar.</p></li></br>
+						<!--ul class="subMenu">
 								<li><a href="#" alt="Pontuar manualmente" title="Pontuar manualmente" tabindex="1">Pontuar manualmente</a></li>
 								<li><a href="#" alt="Gerar códigos de pontuação" title="Gerar códigos de pontuação" tabindex="2">Gerar códigos de pontuação</a></li>
 							</ul-->
+					<li><a href="#" alt="Gerar códigos." title="Gerar códigos."><input type="submit" name="buscarDadosTurmaAluno" value="Gerar códigos de pontuação" id="imputbutton"/></li></a>						
+					<li><p class="information">Gere códigos de pontuação para distribuir aos seus alunos.</p></li></br>
 						
-				
-				
-				<li><a href="#" alt="Ir para Atividades" title="Ir para Atividades" tabindex="3">Atividades</a></li><br />
-				<li><a href="#" alt="Ir para Desempenho" title="Ir para Desempenho" tabindex="4">Desempenho</a></li><br />
-					<!--li><a href="#" alt="Ir para Sair" title="Ir para Sair" tabindex="4">Sair</a></li-->
-			</ul>
-		</nav>
+					<li><a href="#" alt="Ver desempenho." title="Ver desempenho."><input type="submit" name="buscarDadosTurmaAluno" value="Ver desempenho" id="imputbutton"/></li></a>
+					<li><p class="information">Acompanhe o desenvolvimento dos seus alunos.</p></li></br>
+						<!--li><a href="#" alt="Ir para Sair" title="Ir para Sair" tabindex="4">Sair</a></li-->
+				</ul>
+			</nav>
 			<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
-	</section>		
+		</section>
 
 {% endblock %}

@@ -78,7 +78,7 @@ class Turma (models.Model):
  
 class Codigo (models.Model):
 	cod=models.CharField(max_length=15)
-	status=models.BooleanField()
+	status=models.BooleanField(default=False)
 	aluno = models.ForeignKey(Aluno,null=True,blank=True)
 	atividade = models.ForeignKey('AtividadeColegio')
 	turmaprof = models.ForeignKey('TurmaProfessor')
@@ -92,10 +92,16 @@ class Atividade (models.Model):
 	# turma_professor = models.ManyToManyField(TurmaProfessor,through='AtvTurmaProf')
 	def __unicode__(self):
 		return self.nome
+
 class AtividadeColegio (models.Model):
 	atividade = models.ForeignKey(Atividade)
 	colegio = models.ForeignKey(Colegio)
 	pontos = models.IntegerField()
+	def __unicode__(self):
+		return "%s: (%s) %spts" % (self.colegio.nome, self.atividade.nome, self.pontos)
+
+##### Classes Deprecated #####
+
 # class AtvTurmaProf (models.Model):
 # 	atividade = models.ForeignKey(Atividade)
 # 	turmaprof = models.ForeignKey(TurmaProfessor)

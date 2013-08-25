@@ -9,8 +9,9 @@
 			<title>Prize - Ganhe prêmios estudando</title>
 			<meta name="keywords" content="Educação, pontuação, resompensa">
 			<meta name="description" content="Sistema de pontuação e recompensa para estudantes.">
-			<link rel="stylesheet" href="/static/css/style_index.css" type="text/css" />
-			
+			{% block style %}
+			{% endblock %}			
+
 			{% block head %}
 
 			{% endblock %}
@@ -20,11 +21,11 @@
 
 {% endblock %}
 
-
 	<body>
 		<div id="allInterface">
 			<header >
 				<img src="/static/image/prizeLogoHeader.png" title="prize: ganhe prêmios estudando"/>
+				{% block titulo %} {% endblock %}
 			</header>
 			{% block corpo %}
 				
