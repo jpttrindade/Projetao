@@ -71,7 +71,7 @@ class TurmaProfessor (models.Model):
 	turma = models.ForeignKey('Turma')
 	def __unicode__(self):
 		return "%s:%s" % (self.professor.username , self.turma.nome)
-	def criar_codigo(self, pts, qtd, atvcol):
+	def criar_codigo(self, qtd, atvcol):
 		l=[]
 		for j in range(qtd):
 			codigo=''
@@ -80,7 +80,7 @@ class TurmaProfessor (models.Model):
 				for i in range(5):
 					codigo+=choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz')
 				novoCod = Codigo.objects.filter(cod=codigo)
-			novoCod = Codigo(cod=codigo,status=False,turmaprof=self,pontos=pts,atividade=atvcol)
+			novoCod = Codigo(cod=codigo,status=False,turmaprof=self,atividade=atvcol)
 			novoCod.save()
 			l.append(novoCod)
 		return l
