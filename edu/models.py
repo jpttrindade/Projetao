@@ -26,7 +26,9 @@ class Aluno (django.contrib.auth.models.User):
 				if cod.status==0:
 					cod.status=1
 					cod.aluno = self
-					self.pontos+=cod.pontos
+					
+					self.pontos+=cod.atividade.pontos
+					
 					self.save()
 					cod.save()
 					retorno = True
