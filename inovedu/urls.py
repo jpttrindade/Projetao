@@ -13,7 +13,7 @@ urlpatterns = patterns('',
    (r'^login/', "django.contrib.auth.views.login", { "template_name": "login.html" }),
    (r'^logout/', "django.contrib.auth.views.logout_then_login", {'login_url': '/login/'}),
 
-   (r'^gerar_codigo/', "edu.views.gerar_codigo"),
+   #(r'^gerar_codigo/', "edu.views.gerar_codigo"),
    (r'^resgatar_codigo/', "edu.views.resgatar_codigo"),
    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
    (r'^cadastrar_aluno/', "edu.views.cadastrar_aluno"),

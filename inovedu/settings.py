@@ -11,8 +11,8 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 ROOTDIR = os.path.dirname(__file__)
 
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+# DEBUG = False
+# TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('admin', 'admin@admin.com'),

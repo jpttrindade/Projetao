@@ -90,3 +90,13 @@ footer p {
 	margin:10px;
 	padding:10px;
 }
+
+#erros ul {
+	color:red;
+	font-size: 14px;
+}
+
+#output ul {
+	color:red;
+	font-size: 14px;
+}
