@@ -1,14 +1,9 @@
 # -*- encoding: utf-8 -*- 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from edu.models import Aluno
-from edu.models import Professor
-from django.template import RequestContext
-from edu.models import Codigo
-from edu.models import TurmaAluno
+from edu.models import *
 
-from edu.models import Colegio
-from edu.models import Turma
+from django.template import RequestContext
 
 
 from edu.forms import FormCodigo
@@ -23,6 +18,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 
 from django.views import generic
+from django.db.models import *
 
 
 @login_required
@@ -108,19 +104,26 @@ def resgatar_codigo(request):
 def ranking_view(request):
 	###
 	c = RequestContext(request)
+	c['aluno'] = request.user
 	c['passa'] = True
 	if request.method=="POST":
 		form = FormTurma(user=request.user, data=request.POST);
-		print "antes"
 		if form.is_valid():
-			print "depois"
 			dados = form.cleaned_data
+
+########## joao paulo mexendo aqui ###############################################################################
 			turma = Turma.objects.get(nome=dados['turma'])
+			colegio = turma.colegio
+
+			lista_aluno_atividade_pontos = Codigo.objects.filter(turmaprof__turma=turma).values('aluno__username', 'atividade__atividade__nome').annotate(pontos=Sum('atividade__pontos')).order_by('aluno', 'atividade', '-pontos')
+			lista_atividades_colegio = AtividadeColegio.objects.filter(colegio=colegio)
+			qtd_atividades_colegio = len(lista_atividades_colegio)
+
 
 
 			c['lista_alunos'] = Aluno.objects.filter(turma=turma)	
-			
-			
+####################################################################################################################
+	
 	else:
 		print request.user.id
 		form = FormTurma(user=request.user)
@@ -194,6 +197,7 @@ def gerar_PDF(response, lista):
 	# Feche o objeto PDF, e está feito.
 	p.showPage()
 	p.save()
+
 
 def get_turmas(request):
 	turma = TurmaAluno.objects.filter()

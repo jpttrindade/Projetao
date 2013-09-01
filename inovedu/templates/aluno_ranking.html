@@ -1,6 +1,15 @@
 {% extends 'base_aluno.html' %}
 
 {% block corpo %}
+	<section> 
+
+		<nav class="clear"> <br />
+			<a href="/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
+					<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
+		</nav>
+
+		
+
 <div id="cadAluno">
 {% if not passa %}
 	<form action="" method="post" id="filterAcompanhamentoAl">
@@ -39,4 +48,6 @@
 
 
 </div>
+	</section>
+
 {% endblock %}

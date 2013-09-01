@@ -72,6 +72,11 @@ class Professor (django.contrib.auth.models.User):
 class TurmaAluno (models.Model): # -- verificar o que deve ser único..
 	aluno=models.ForeignKey(Aluno)
 	turma=models.ForeignKey('Turma')
+	pontos=models.IntegerField(default=0)
+
+	class Meta:
+		ordering = ['-pontos']
+
 
 
 class TurmaProfessor (models.Model):
