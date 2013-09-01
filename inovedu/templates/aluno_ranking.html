@@ -1,0 +1,42 @@
+{% extends 'base_aluno.html' %}
+
+{% block corpo %}
+<div id="cadAluno">
+{% if not passa %}
+	<form action="" method="post" id="filterAcompanhamentoAl">
+		{% csrf_token %}
+			<div id="output">
+
+
+					{{form.turma.errors}}
+					<h1>{{form.turma.label}}</h1>  <br> {{ form.turma }}
+
+
+			</div>
+		</div>
+		<button type="submit">Ver Ranking</button>
+	</form>
+
+{% else %}
+	{% if lista_alunos %}
+	<ol>
+		{% for aluno in lista_alunos %}
+		<li>{{aluno.username}} - {{aluno.pontos}} </li>
+
+		{% endfor %}
+	</ol>
+
+
+{% else %}
+	<p> Nenhum aluno cadastrado na turma</p>
+
+{% endif %}
+
+
+
+{% endif%}
+
+
+
+</div>
+{% endblock %}

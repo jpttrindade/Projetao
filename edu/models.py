@@ -11,7 +11,10 @@ class Colegio(models.Model):
 
 class Aluno (django.contrib.auth.models.User):
 	turma = models.ManyToManyField('Turma',through='TurmaAluno')
+	creditos=models.IntegerField(default=0)
 	pontos=models.IntegerField(default=0)
+
+
 	def __unicode__(self):
 		return self.username
 
@@ -28,6 +31,7 @@ class Aluno (django.contrib.auth.models.User):
 					cod.aluno = self
 					
 					self.pontos+=cod.atividade.pontos
+					self.creditos+=cod.atividade.pontos
 					
 					self.save()
 					cod.save()
@@ -37,6 +41,10 @@ class Aluno (django.contrib.auth.models.User):
 		except Codigo.DoesNotExist:
 			pass
 		return retorno
+
+	class Meta:
+		ordering = ['-pontos']
+
 
 class Professor (django.contrib.auth.models.User):
 	turma = models.ManyToManyField('Turma',through='TurmaProfessor')
@@ -64,6 +72,7 @@ class Professor (django.contrib.auth.models.User):
 class TurmaAluno (models.Model): # -- verificar o que deve ser único..
 	aluno=models.ForeignKey(Aluno)
 	turma=models.ForeignKey('Turma')
+
 
 class TurmaProfessor (models.Model):
 	disciplina = models.CharField(max_length=16)
@@ -114,6 +123,8 @@ class AtividadeColegio (models.Model):
 	pontos = models.IntegerField()
 	def __unicode__(self):
 		return "%s: (%s) %spts" % (self.colegio.nome, self.atividade.nome, self.pontos)
+
+
 
 ##### Classes Deprecated #####
 

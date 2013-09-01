@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block corpo %}
+
+{% if alunos %}
+	<ol>
+		{% for aluno in alunos %}
+		<li>{{aluno.username}} - {{aluno.pontos}} </li>
+
+		{% endfor %}
+	</ol>
+
+
+{% else %}
+	<p> Nenhum aluno cadastrado na turma</p>
+
+{% endif %}
+
+{% endblock %}
+

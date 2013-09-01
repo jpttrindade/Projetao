@@ -42,3 +42,11 @@ class FormAluno(forms.Form):
 		if self.cleaned_data['senha'] != self.data['confirme_senha']:
 			raise forms.ValidationError('Senhas não conferem!')
 		return self.cleaned_data['senha']
+
+class FormTurma(forms.Form):
+
+	def __init__(self, user=None, *args, **kwargs):
+		super(FormTurma, self).__init__(*args,**kwargs)
+		self._user = user
+		aluno = Aluno.objects.get(id=self._user.id)
+		self.fields['turma'] = forms.ModelChoiceField(queryset=aluno.turma.all())

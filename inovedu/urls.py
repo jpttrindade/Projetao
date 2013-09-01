@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, include, url
 from django.conf.urls.defaults import *
 from django.conf import settings
+from edu import views
+from django.contrib.auth.decorators import login_required
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -17,6 +19,7 @@ urlpatterns = patterns('',
    (r'^resgatar_codigo/', "edu.views.resgatar_codigo"),
    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
    (r'^cadastrar_aluno/', "edu.views.cadastrar_aluno"),
+   (r'^ranking/', "edu.views.ranking_view"),
 
     # Examples:
     # url(r'^$', 'InovEdu.views.home', name='home'),

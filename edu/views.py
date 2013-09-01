@@ -13,12 +13,16 @@ from edu.models import Turma
 
 from edu.forms import FormCodigo
 from edu.forms import FormAluno
+from edu.forms import FormTurma
+
 
 from edu.forms import FormResgate
 
 from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
+
+from django.views import generic
 
 
 @login_required
@@ -87,6 +91,65 @@ def resgatar_codigo(request):
 	c['form'] = form
 	return render_to_response("index_aluno.html", c)
 
+# @login_required
+# def ranking(request):
+# 	c=RequestContext(request)
+# 	if request.method="POST":
+# 		pass
+
+# 	else:
+# 		aluno = Aluno,objects.get(id=request.user.id)
+# 		if(aluno != null)
+# 			ranking = Aluno.objects.filter(turma=aluno.turma)
+# 			c['ranking'] = ranking
+
+# 	return render_to_response("ranking.html", c)	
+#@login_required		
+def ranking_view(request):
+	###
+	c = RequestContext(request)
+	c['passa'] = True
+	if request.method=="POST":
+		form = FormTurma(user=request.user, data=request.POST);
+		print "antes"
+		if form.is_valid():
+			print "depois"
+			dados = form.cleaned_data
+			turma = Turma.objects.get(nome=dados['turma'])
+
+
+			c['lista_alunos'] = Aluno.objects.filter(turma=turma)	
+			
+			
+	else:
+		print request.user.id
+		form = FormTurma(user=request.user)
+		c['form']=form
+		c['passa'] = False
+
+	return render_to_response("aluno_ranking.html", c)
+
+
+class RankingView(generic.ListView):
+	template_name = "aluno_ranking.html"
+	context_object_name = 'alunos'
+
+	def get_queryset(self):
+
+		##verifica se eh professor:
+
+		# usuario = Professor.objects.get(id=self.request.user.id)
+		# if(usuario == null):
+		# 	usuario = Aluno.objects.get(id=self.request.user.id)
+		# 	turma = TurmaAluno.objects.get(aluno=usuario).turma
+		# else:
+		# 	turma=TurmaProfessor.objects.get(professor=usuario).turma
+		turma = Turma.objects.get(nome=self.request.session['turma'])
+		return Aluno.objects.filter(turma=turma)
+
+
+
+
 def cadastrar_aluno(request):
 	c = RequestContext(request)
 	if request.method=="POST":
@@ -94,12 +157,13 @@ def cadastrar_aluno(request):
 		if form.is_valid():
 			dados = form.cleaned_data
 			colegio = Colegio.objects.get(nome=dados['colegio'])
-			turma = Turma.objects.get(colegio=colegio)
+			turma = Turma.objects.filter(colegio=colegio)
+
 			novo_aluno = Aluno(username=dados['login'], first_name=dados['primeiro_nome'],
 						last_name=dados['ultimo_nome'], email=dados['email'], pontos=0)
 			novo_aluno.set_password(str(dados['senha']))
 			novo_aluno.save()
-			turma_aluno = TurmaAluno(aluno=novo_aluno, turma=turma)
+			turma_aluno = TurmaAluno(aluno=novo_aluno, turma=turma[0])
 			turma_aluno.save()
 
 			return HttpResponseRedirect('/login/')
@@ -108,6 +172,7 @@ def cadastrar_aluno(request):
 		c['form'] = FormAluno()
 	
 	return render_to_response("cadastro_aluno.html", c)
+
 
 def gerar_PDF(response, lista):
 	qtd_codigos = len(lista)  # 6 x 30 = 180 codigos por pagina
@@ -129,3 +194,6 @@ def gerar_PDF(response, lista):
 	# Feche o objeto PDF, e está feito.
 	p.showPage()
 	p.save()
+
+def get_turmas(request):
+	turma = TurmaAluno.objects.filter()
