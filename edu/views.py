@@ -100,7 +100,7 @@ def resgatar_codigo(request):
 # 			c['ranking'] = ranking
 
 # 	return render_to_response("ranking.html", c)	
-#@login_required		
+@login_required		
 def ranking_view(request):
 	###
 	c = RequestContext(request)
@@ -133,37 +133,38 @@ def ranking_view(request):
 
 			
 				#variavel auxiliar no for. 
-			nome_anterior = str(lista_aluno_atividade_pontos[0]['aluno__username'])
-			proxima_atividade = 0
+			if lista_aluno_atividade_pontos:
+				nome_anterior = str(lista_aluno_atividade_pontos[0]['aluno__username'])
+				proxima_atividade = 0
 
-			for i in range(len(lista_aluno_atividade_pontos)): #para cada conjunto de valores na lista de dicionarios
-				nome_atual = str(lista_aluno_atividade_pontos[i]['aluno__username'])
-				if nome_atual == nome_anterior: #verifica se o dicionario atual ainda é do aluno anterior
-					for j in range(len(lista_atividades_colegio)): #loop para as N atividades do colegio
-						if str(lista_aluno_atividade_pontos[i]['atividade__atividade__nome']) == str(lista_atividades_colegio[j].atividade.nome):
-							lista_aluno_pontacao_atividades+=[lista_aluno_atividade_pontos[i]['pontos']]
-							proxima_atividade+=1		
-							break;
-						else:
-							if j == proxima_atividade:
-								lista_aluno_pontacao_atividades+=[0]
+				for i in range(len(lista_aluno_atividade_pontos)): #para cada conjunto de valores na lista de dicionarios
+					nome_atual = str(lista_aluno_atividade_pontos[i]['aluno__username'])
+					if nome_atual == nome_anterior: #verifica se o dicionario atual ainda é do aluno anterior
+						for j in range(len(lista_atividades_colegio)): #loop para as N atividades do colegio
+							if str(lista_aluno_atividade_pontos[i]['atividade__atividade__nome']) == str(lista_atividades_colegio[j].atividade.nome):
+								lista_aluno_pontacao_atividades+=[lista_aluno_atividade_pontos[i]['pontos']]
+								proxima_atividade+=1		
+								break;
+							else:
+								if j == proxima_atividade:
+									lista_aluno_pontacao_atividades+=[0]
+					else:
+						lista_dicionario_aluno_potuacao_atividade += [{'nome': nome_anterior, 'pontos': lista_aluno_pontacao_atividades+[sum(lista_aluno_pontacao_atividades)]}]
+						lista_aluno_pontacao_atividades = [];
+						proxima_atividade = 0
+						for j in range(len(lista_atividades_colegio)): #loop para as N atividades do colegio
+							if str(lista_aluno_atividade_pontos[i]['atividade__atividade__nome']) == str(lista_atividades_colegio[j].atividade.nome):
+								lista_aluno_pontacao_atividades+=[lista_aluno_atividade_pontos[i]['pontos']]
+								proxima_atividade+=1
+								break;							
+							else:
+								if j == proxima_atividade:							
+									lista_aluno_pontacao_atividades+=[0]
+					nome_anterior = nome_atual	
 				else:
 					lista_dicionario_aluno_potuacao_atividade += [{'nome': nome_anterior, 'pontos': lista_aluno_pontacao_atividades+[sum(lista_aluno_pontacao_atividades)]}]
-					lista_aluno_pontacao_atividades = [];
-					proxima_atividade = 0
-					for j in range(len(lista_atividades_colegio)): #loop para as N atividades do colegio
-						if str(lista_aluno_atividade_pontos[i]['atividade__atividade__nome']) == str(lista_atividades_colegio[j].atividade.nome):
-							lista_aluno_pontacao_atividades+=[lista_aluno_atividade_pontos[i]['pontos']]
-							proxima_atividade+=1
-							break;							
-						else:
-							if j == proxima_atividade:							
-								lista_aluno_pontacao_atividades+=[0]
-				nome_anterior = nome_atual	
-			else:
-				lista_dicionario_aluno_potuacao_atividade += [{'nome': nome_anterior, 'pontos': lista_aluno_pontacao_atividades+[sum(lista_aluno_pontacao_atividades)]}]
 
-			#c['lista_alunos'] = Aluno.objects.filter(turma=turma)	
+				#c['lista_alunos'] = Aluno.objects.filter(turma=turma)	
 			c['lista_alunos'] = lista_dicionario_aluno_potuacao_atividade
 
 ####################################################################################################################	

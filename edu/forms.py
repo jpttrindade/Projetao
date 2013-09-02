@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*- 
 from django.forms import ModelForm
 from edu.models import Codigo
-from edu.models import Aluno, Colegio, Turma
+from edu.models import Aluno, Colegio, Turma, Professor
 from django import forms
 from django.contrib.auth.models import User
 #from django.utils.translation import ugettext as _
@@ -48,5 +48,7 @@ class FormTurma(forms.Form):
 	def __init__(self, user=None, *args, **kwargs):
 		super(FormTurma, self).__init__(*args,**kwargs)
 		self._user = user
-		aluno = Aluno.objects.get(id=self._user.id)
-		self.fields['turma'] = forms.ModelChoiceField(queryset=aluno.turma.all())
+		usuario = Aluno.objects.filter(id=self._user.id)
+		if not usuario:
+			usuario = Professor.objects.filter(id=self._user.id)
+		self.fields['turma'] = forms.ModelChoiceField(queryset=usuario[0].turma.all())
