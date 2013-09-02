@@ -119,7 +119,7 @@ def ranking_view(request):
 			lista_aluno_atividade_pontos = Codigo.objects.filter(turmaprof__turma=turma).exclude(aluno=None).values('aluno__username', 'atividade__atividade__nome').annotate(pontos=Sum('atividade__pontos')).order_by('aluno', 'atividade', '-pontos')
 			print lista_aluno_atividade_pontos
 				#lista de todas as atividades de um determinado colegio			
-			lista_atividades_colegio = AtividadeColegio.objects.filter(colegio=colegio).order_by('-atividade')
+			lista_atividades_colegio = AtividadeColegio.objects.filter(colegio=colegio).order_by('atividade')
 			print lista_atividades_colegio
 			c['lista_atividades_colegio'] = lista_atividades_colegio
 				#numero de atividades de um determinado colegio
@@ -148,20 +148,27 @@ def ranking_view(request):
 							else:
 								if j == proxima_atividade:
 									lista_aluno_pontacao_atividades+=[0]
+									proxima_atividade+=1		
+
 					else:
+						if len(lista_aluno_pontacao_atividades) < qtd_atividades_colegio:
+							lista_aluno_pontacao_atividades += (qtd_atividades_colegio-len(lista_aluno_pontacao_atividades))*[0]
 						lista_dicionario_aluno_potuacao_atividade += [{'nome': nome_anterior, 'pontos': lista_aluno_pontacao_atividades+[sum(lista_aluno_pontacao_atividades)]}]
 						lista_aluno_pontacao_atividades = [];
 						proxima_atividade = 0
 						for j in range(len(lista_atividades_colegio)): #loop para as N atividades do colegio
 							if str(lista_aluno_atividade_pontos[i]['atividade__atividade__nome']) == str(lista_atividades_colegio[j].atividade.nome):
 								lista_aluno_pontacao_atividades+=[lista_aluno_atividade_pontos[i]['pontos']]
-								proxima_atividade+=1
-								break;							
+								proxima_atividade+=1		
+								break;
 							else:
-								if j == proxima_atividade:							
+								if j == proxima_atividade:
 									lista_aluno_pontacao_atividades+=[0]
+									proxima_atividade+=1	
 					nome_anterior = nome_atual	
 				else:
+					if len(lista_aluno_pontacao_atividades) < qtd_atividades_colegio:
+						lista_aluno_pontacao_atividades += (qtd_atividades_colegio-len(lista_aluno_pontacao_atividades))*[0]
 					lista_dicionario_aluno_potuacao_atividade += [{'nome': nome_anterior, 'pontos': lista_aluno_pontacao_atividades+[sum(lista_aluno_pontacao_atividades)]}]
 
 				#c['lista_alunos'] = Aluno.objects.filter(turma=turma)	
