@@ -112,18 +112,61 @@ def ranking_view(request):
 			dados = form.cleaned_data
 
 ########## joao paulo mexendo aqui ###############################################################################
-			turma = Turma.objects.get(nome=dados['turma'])
+			turma = dados['turma']
 			colegio = turma.colegio
 
-			lista_aluno_atividade_pontos = Codigo.objects.filter(turmaprof__turma=turma).values('aluno__username', 'atividade__atividade__nome').annotate(pontos=Sum('atividade__pontos')).order_by('aluno', 'atividade', '-pontos')
-			lista_atividades_colegio = AtividadeColegio.objects.filter(colegio=colegio)
+				#lista com os dicionarios: {nome_aluno, nome_atividade, total_pontos}
+			lista_aluno_atividade_pontos = Codigo.objects.filter(turmaprof__turma=turma).exclude(aluno=None).values('aluno__username', 'atividade__atividade__nome').annotate(pontos=Sum('atividade__pontos')).order_by('aluno', 'atividade', '-pontos')
+			print lista_aluno_atividade_pontos
+				#lista de todas as atividades de um determinado colegio			
+			lista_atividades_colegio = AtividadeColegio.objects.filter(colegio=colegio).order_by('-atividade')
+			print lista_atividades_colegio
+			c['lista_atividades_colegio'] = lista_atividades_colegio
+				#numero de atividades de um determinado colegio
 			qtd_atividades_colegio = len(lista_atividades_colegio)
 
+			
+			lista_dicionario_aluno_potuacao_atividade=[]
 
+				#lista q vai conter as N pontuações referentes as N atividades de um determinado aluno
+			lista_aluno_pontacao_atividades = [];
 
-			c['lista_alunos'] = Aluno.objects.filter(turma=turma)	
-####################################################################################################################
-	
+			
+				#variavel auxiliar no for. 
+			nome_anterior = str(lista_aluno_atividade_pontos[0]['aluno__username'])
+			proxima_atividade = 0
+
+			for i in range(len(lista_aluno_atividade_pontos)): #para cada conjunto de valores na lista de dicionarios
+				nome_atual = str(lista_aluno_atividade_pontos[i]['aluno__username'])
+				if nome_atual == nome_anterior: #verifica se o dicionario atual ainda é do aluno anterior
+					for j in range(len(lista_atividades_colegio)): #loop para as N atividades do colegio
+						if str(lista_aluno_atividade_pontos[i]['atividade__atividade__nome']) == str(lista_atividades_colegio[j].atividade.nome):
+							lista_aluno_pontacao_atividades+=[lista_aluno_atividade_pontos[i]['pontos']]
+							proxima_atividade+=1		
+							break;
+						else:
+							if j == proxima_atividade:
+								lista_aluno_pontacao_atividades+=[0]
+				else:
+					lista_dicionario_aluno_potuacao_atividade += [{'nome': nome_anterior, 'pontos': lista_aluno_pontacao_atividades+[sum(lista_aluno_pontacao_atividades)]}]
+					lista_aluno_pontacao_atividades = [];
+					proxima_atividade = 0
+					for j in range(len(lista_atividades_colegio)): #loop para as N atividades do colegio
+						if str(lista_aluno_atividade_pontos[i]['atividade__atividade__nome']) == str(lista_atividades_colegio[j].atividade.nome):
+							lista_aluno_pontacao_atividades+=[lista_aluno_atividade_pontos[i]['pontos']]
+							proxima_atividade+=1
+							break;							
+						else:
+							if j == proxima_atividade:							
+								lista_aluno_pontacao_atividades+=[0]
+				nome_anterior = nome_atual	
+			else:
+				lista_dicionario_aluno_potuacao_atividade += [{'nome': nome_anterior, 'pontos': lista_aluno_pontacao_atividades+[sum(lista_aluno_pontacao_atividades)]}]
+
+			#c['lista_alunos'] = Aluno.objects.filter(turma=turma)	
+			c['lista_alunos'] = lista_dicionario_aluno_potuacao_atividade
+
+####################################################################################################################	
 	else:
 		print request.user.id
 		form = FormTurma(user=request.user)

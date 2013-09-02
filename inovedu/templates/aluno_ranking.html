@@ -28,13 +28,30 @@
 
 {% else %}
 	{% if lista_alunos %}
-	<ol>
-		{% for aluno in lista_alunos %}
-		<li>{{aluno.username}} - {{aluno.pontos}} </li>
+		<table border="1" >
+			<tr>
+				<th> Posição </th>
+				<th> Aluno </th>
+				{% for atividade in lista_atividades_colegio %}
+			
+					<th>{{atividade.atividade.nome}}</th>
+				
+				{% endfor%}
 
-		{% endfor %}
-	</ol>
-
+				<th> Total </th>
+			</tr>
+				
+				{% for alunos in lista_alunos%}
+					<tr align="center"> 
+						<td>{{ forloop.counter }} </td>
+						<td>{{alunos.nome}}</td>
+						{% for pontos in alunos.pontos %}		
+							<td>{{pontos}}  </td>
+						{% endfor %}			
+					</tr>
+					
+				{% endfor %}
+		</table>
 
 {% else %}
 	<p> Nenhum aluno cadastrado na turma</p>
