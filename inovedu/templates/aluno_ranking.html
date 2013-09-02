@@ -28,21 +28,22 @@
 
 {% else %}
 	{% if lista_alunos %}
-		<table border="1" >
+	<div class="CSSTableGenerator" >
+		<table>
 			<tr>
-				<th> Posição </th>
-				<th> Aluno </th>
+				<td> Posição </td>
+				<td> Aluno </td>
 				{% for atividade in lista_atividades_colegio %}
 			
-					<th>{{atividade.atividade.nome}}</th>
+					<td>{{atividade.atividade.nome}}</td>
 				
 				{% endfor%}
 
-				<th> Total </th>
+				<td> Total </td>
 			</tr>
 				
 				{% for alunos in lista_alunos%}
-					<tr align="center"> 
+					<tr> 
 						<td>{{ forloop.counter }} </td>
 						<td>{{alunos.nome}}</td>
 						{% for pontos in alunos.pontos %}		
@@ -52,6 +53,7 @@
 					
 				{% endfor %}
 		</table>
+    </div>
 
 {% else %}
 	<p> Nenhum aluno ou codigo registrado na turma</p>
