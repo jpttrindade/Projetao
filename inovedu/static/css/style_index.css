@@ -33,6 +33,19 @@ section img {
 	width: 89%;
 	float:none
 }
+
+nav {
+	height:35px;
+	background-color: #898989;
+	padding: 3px;
+}
+nav a{
+	color: #fff;
+	text-decoration:underline;
+	padding: 2px;
+	font-size: 14px;
+	margin-left: 10px;
+}
 aside{
 	display:inline-block;
 	width: 240px;
@@ -99,9 +112,4 @@ footer p {
 #output ul {
 	color:red;
 	font-size: 14px;
-}
-
-table, th, td
-{
-border: 1px solid black;
 }

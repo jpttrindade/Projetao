@@ -1,22 +1,15 @@
 {% extends 'base_aluno.html' %}
 
 
-{% block js %}
-	<script type="text/javascript">
-		function submeter(){
-			confirm("Alerta");
-			}
-	</script>
 
-{% endblock %}
 
 {% block corpo %}
 
 	<section> 
 		<nav class="clear"> <br />
-			<a href="/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
+					<a href="/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
 					<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
-		</nav>
+				</nav>
 		
 		<article>
 			<h1 class="gerarCodeTitle">{{ aluno.creditos }}</h1>
@@ -43,7 +36,7 @@
    				<!-- <input type="submit" name="gerarOtimo" value="Ranking" id="button_gerar"/> -->
 			</article>
 		</aside>
-		<article>
+		<article id="foto">
 			<img src="/static/image/avatar_male_black.jpeg" id="avatarImg"/>
 		</article>
 		<article class="trocarSeusPontos">

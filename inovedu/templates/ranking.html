@@ -1,20 +1,21 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Krypton Redux</title>
+				<link rel="stylesheet" href="{{STATIC_URL}}css/style_index.css" type="text/css" />
+        <script type='text/javascript' src='{{STATIC_URL}}js/script.js'></script>
+        <script src="{{STATIC_URL}}js/jquery-2.0.2.js"></script>
+	</head>
+	<body>
+		<div></div>
 
-{% block corpo %}
-
-{% if alunos %}
-	<ol>
-		{% for aluno in alunos %}
-		<li>{{aluno.username}} - {{aluno.pontos}} </li>
-
-		{% endfor %}
-	</ol>
-
-
-{% else %}
-	<p> Nenhum aluno cadastrado na turma</p>
-
-{% endif %}
-
-{% endblock %}
-
+		<script>
+			$( document ).ready(function() {
+				$('div').click(function()
+				{
+				$(this).load( "/ranking/" );
+				});
+			});
+		</script>
+	</body>
+</html>

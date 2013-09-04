@@ -7,7 +7,7 @@ import os
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+#PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 ROOTDIR = os.path.dirname(__file__)
 
@@ -79,7 +79,7 @@ STATIC_ROOT = os.path.join(PROJECT_PATH, 'static_files')
 STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
-os.path.join(PROJECT_PATH, 'static'),
+    os.path.join(PROJECT_PATH, 'static'),
 )
 
 # List of finder classes that know how to find static files in

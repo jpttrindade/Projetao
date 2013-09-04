@@ -18,9 +18,6 @@ class Aluno (django.contrib.auth.models.User):
 	def __unicode__(self):
 		return self.username
 
-	def set_pontos(self):
-		self.pontos=0;
-
 	def creditar_pontos(self,codigo):
 		retorno = False
 		try:
@@ -135,3 +132,19 @@ class AtividadeColegio (models.Model):
 # 	atividade = models.ForeignKey(Atividade)
 # 	turmaprof = models.ForeignKey(TurmaProfessor)
 # 	pontos = models.IntegerField()
+
+def criar_codigo(turmaprofessor, atividade, qtd):
+	l=[]
+	for j in range(qtd):
+		codigo=''
+		pts = atividade.pontos
+		novoCod = not None
+		while novoCod:
+			for i in range(10):
+				codigo+=choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz')
+			codigo+=str(pts)
+			novoCod = Codigo.objects.filter(cod=codigo)
+		novoCod = Codigo(cod=codigo, atividade=atividade, turmaprof=turmaprofessor)
+		novoCod.save()
+		l.append(novoCod)
+	return l

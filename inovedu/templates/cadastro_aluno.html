@@ -3,20 +3,21 @@
 
 {% block head %}
 
-	<script type="text/javascript">
-		function send_request(){
-  			$.get(location.href, function(data){
-    			$("#output").html(data);
-  			});
-		}
-	</script>
 
 {% endblock %}
 
 {% block corpo %}
-<div id="cadAluno">
+     <script src="{{STATIC_URL}}js/jquery-2.0.2.js"></script>
+     <script type='text/javascript' src='{{STATIC_URL}}js/script.js'></script>
 
+<div id="cadAluno">
+	<nav class="clear"> <br />
+		<a href="/" alt="Voltar para menu." title="Voltar para menu." tabindex="1">Voltar</a>
+			<!--br class="brClear" /> <!-- jogar tudo abaixo do menu -->
+	</nav>
+		
 	{% if form.errors %}
+		 
         	<p style="color: red;">
             	Por favor, corrigir  erro{{form.errors|pluralize}}!
             </p>
@@ -26,29 +27,40 @@
 		{% csrf_token %}
 		
 		<div id="erros">
-			{{form.primeiro_nome.errors}}
+			  
+				{{form.primeiro_nome.errors}}
 			{{form.primeiro_nome.label}} {{ form.primeiro_nome }}
+			 
 			{{form.ultimo_nome.errors}}
 			{{form.ultimo_nome.label}} {{ form.ultimo_nome }}
+			 
 			{{form.email.errors}}
 			{{form.email.label}} {{form.email}}
+			 
 			{{form.login.errors}}
 			{{form.login.label}} {{form.login}}
+			
+
+			<div id="output">
+				  
+				{{form.colegio.errors}}
+				{{form.colegio.label}}  <br> {{ form.colegio }}
+
+				<!-- {% if turma %} -->
+				{{turma.turma.errors}}
+				{{turma.turma.label}} <br> {{turma.turma}}
+				<!-- {% endif %} -->
+			</div>
+
 			{{form.senha.errors}}
 			{{form.senha.label}} {{form.senha}}
 			{{form.confirme_senha.label}}  {{form.confirme_senha}}
 
-
-			<div id="output">
-				{{form.colegio.errors}}
-				{{form.colegio.label}}  <br> {{ form.colegio }}
-				
-				{{form.turma.errors}}
-				{{form.turma.label}} {{ form.turma }}
-			</div>
 		</div>
 
 		<br><button type="submit">Cadastrar</button>
 	</form>
 </div>
+
+
 {% endblock %}
