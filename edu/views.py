@@ -210,33 +210,23 @@ def cadastrar_aluno(request):
 	c = RequestContext(request)
 	if request.method=="POST":
 		form = FormAluno(request.POST)
-		print form
 		if form.is_valid():
-			turma = FormTurmaColegio(data=request.POST)
-			print turma
-			if turma.is_valid():
 				dados = form.cleaned_data
 				colegio = Colegio.objects.get(nome=dados['colegio'])
-				turma = Turma.objects.filter(colegio=colegio)
+				turma = Turma.objects.filter(colegio=colegio)[0]
 				novo_aluno = Aluno(username=dados['login'], first_name=dados['primeiro_nome'],
 							last_name=dados['ultimo_nome'], email=dados['email'], pontos=0)
 				novo_aluno.set_password(str(dados['senha']))
 				novo_aluno.save()
-				turma_aluno = TurmaAluno(aluno=novo_aluno, turma=turma[0])
+				turma_aluno = TurmaAluno(aluno=novo_aluno, turma=turma)
 				turma_aluno.save()
-				return HttpResponseRedirect('/login/')
-			else:
-				c['turma'] = turma
 
-		elif form.cleaned_data.get('colegio'):
-			turma = FormTurmaColegio(colegio=form.cleaned_data.get('colegio'))
-			c['turma'] = turma
-			c['reload'] = True;
+				return HttpResponseRedirect("/")
 
-		print form.cleaned_data.get('colegio')
 		c['form']= form
 	else:
 		c['form'] = FormAluno()
+	#	c['turma']= FormTurmaColegio()
 	return render_to_response("cadastro_aluno.html", c)
 
 
@@ -262,13 +252,13 @@ def gerar_PDF(response, lista):
 	p.save()
 
 
-def get_turmas(request):
-	turma = TurmaAluno.objects.filter()
-
-
-def teste(request):
+def get_turmas(request, nome_colegio):
+	colegio = get_object_or_404(Colegio, nome=nome_colegio)
+	turma = FormTurmaColegio(colegio=colegio)
 	c = RequestContext(request)
-	print settings.STATIC_ROOT
-	print settings.PROJECT_PATH
-	print settings.ROOTDIR
-	return render_to_response("ranking.html", c)
+	c = HttpResponse()
+	c.write(turma)
+	#c['turma'] = turma
+	return HttpResponse(c);
+	#return render_to_response("turma_colegio.html",c)
+	#turma = TurmaAluno.objects.filter(colegio=colegio)

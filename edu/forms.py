@@ -16,12 +16,7 @@ class FormResgate(forms.Form):
 class FormTurmaColegio(forms.Form):
 	def __init__(self, colegio=None ,*args, **kwargs):
 		super(FormTurmaColegio, self).__init__(*args,**kwargs)
-		self.fields['turma'] = forms.ModelChoiceField(queryset=Turma.objects.filter(colegio=colegio), empty_label='Selecione',label='Turma')
-
-
-def buscar_turma(colegio):
-	colegio = COlegio.objects.get(nome=colegio);
-	return	Turma.objects.filter(colegio=colegio);
+		self.fields['turma'] = forms.ModelChoiceField(queryset=Turma.objects.filter(colegio=colegio), empty_label=None,label="")
 
 
 class FormAluno(forms.Form):

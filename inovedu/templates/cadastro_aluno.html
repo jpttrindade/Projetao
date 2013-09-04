@@ -41,17 +41,18 @@
 			{{form.login.label}} {{form.login}}
 			
 
-			<div id="output">
+			
 				  
 				{{form.colegio.errors}}
-				{{form.colegio.label}}  <br> {{ form.colegio }}
-
-				<!-- {% if turma %} -->
-				{{turma.turma.errors}}
-				{{turma.turma.label}} <br> {{turma.turma}}
-				<!-- {% endif %} -->
+				{{form.colegio.label}}   {{ form.colegio }}
+			
+			<div id="list_turma">
+				{% if turma %}
+					{{turma.turma.errors}}
+				 	<br>Turma {{ turma.turma }}
+				{%endif%}
 			</div>
-
+			<br>
 			{{form.senha.errors}}
 			{{form.senha.label}} {{form.senha}}
 			{{form.confirme_senha.label}}  {{form.confirme_senha}}

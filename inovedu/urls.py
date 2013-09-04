@@ -20,7 +20,7 @@ urlpatterns = patterns('',
    (r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
    (r'^cadastrar_aluno/', "edu.views.cadastrar_aluno"),
    (r'^ranking/', "edu.views.ranking_view"),
-   (r'^teste/', "edu.views.teste"),
+   (r'^turma/(?P<nome_colegio>\w+)/$', 'edu.views.get_turmas'),
 
     # Examples:
     # url(r'^$', 'InovEdu.views.home', name='home'),
