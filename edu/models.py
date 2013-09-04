@@ -140,7 +140,7 @@ def criar_codigo(turmaprofessor, atividade, qtd):
 		pts = atividade.pontos
 		novoCod = not None
 		while novoCod:
-			for i in range(10):
+			for i in range(5):
 				codigo+=choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz')
 			codigo+=str(pts)
 			novoCod = Codigo.objects.filter(cod=codigo)
