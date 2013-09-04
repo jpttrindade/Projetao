@@ -27,7 +27,7 @@ $(document).ready(function(){
 	/*select = $("#id_turma").hide();*/
 	var escolha_turma = null;
 	
-/*	$('#id_colegio').change(function(){*/
+	$('#id_colegio').change(function(){
 		nome_colegio = $('#id_colegio').find(":selected").text();
 		if(nome_colegio != "Selecione"){
 				escolha_turma = $("#list_turma");
