@@ -13,12 +13,6 @@ class FormCodigo(forms.Form):
 class FormResgate(forms.Form):
 	codigo = forms.CharField()
 
-class FormTurmaColegio(forms.Form):
-	def __init__(self, colegio=None ,*args, **kwargs):
-		super(FormTurmaColegio, self).__init__(*args,**kwargs)
-		self.fields['turma'] = forms.ModelChoiceField(queryset=Turma.objects.filter(colegio=colegio), empty_label=None,label="")
-
-
 class FormAluno(forms.Form):
 	primeiro_nome = forms.CharField(widget=forms.TextInput, label='Primeiro Nome');
 	ultimo_nome = forms.CharField(widget=forms.TextInput, label='Último Nome');
@@ -27,9 +21,9 @@ class FormAluno(forms.Form):
 	senha = forms.CharField(widget=forms.PasswordInput, min_length=5)
 	confirme_senha = forms.CharField(widget=forms.PasswordInput, min_length=5)
 
-	def __init__(self, *args, **kwargs):
-		super(FormAluno, self).__init__(*args, **kwargs)
-		self.fields['colegio'] = forms.ModelChoiceField(queryset=Colegio.objects.all(),empty_label='Selecione' ,label='Colégio')
+#	def __init__(self, *args, **kwargs):
+#		super(FormAluno, self).__init__(*args, **kwargs)
+#		self.fields['colegio'] = forms.ModelChoiceField(queryset=Colegio.objects.all(),empty_label='Selecione' ,label='Colégio')
 		#self.fields['turma'] = forms.ModelChoiceField(queryset=Turma.objects.all())
 	# 	pass
 	def clean_login(self):
@@ -56,3 +50,10 @@ class FormTurma(forms.Form):
 		if not usuario:
 			usuario = Professor.objects.filter(id=self._user.id)
 		self.fields['turma'] = forms.ModelChoiceField(queryset=usuario[0].turma.all())
+
+class FormColegio(forms.Form):
+	COLEGIO_CHOICES = [("", "-- Escolha um Colégio --"),]+[(c.nome,c.nome) for c in Colegio.objects.all()]
+	TURMA_CHOICES = [(t.nome, t.nome) for t in Turma.objects.all()]
+	TURMA_CHOICES.insert(0, ("", "-- Escolha um colégio primeiro --"))
+	colegio = forms.ChoiceField(choices=COLEGIO_CHOICES, widget=forms.Select())
+	turma = forms.ChoiceField(choices=TURMA_CHOICES)

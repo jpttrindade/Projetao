@@ -1,1 +1,11 @@
-{{turma.turma}}
+<html>
+<body>
+
+<select id='id_turma' name='turma'>
+<option value="" selected="selected">-- Escolha um colégio primeiro --</option>
+{% for t in turma %}
+    <option value="{{ t.nome }}">{{ t.nome|title }}</option>
+{% endfor %}
+</select>
+<body>
+</html>

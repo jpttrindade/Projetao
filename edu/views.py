@@ -5,12 +5,11 @@ from edu.models import *
 
 from django.template import RequestContext
 
+from edu.forms import FormColegio
 
 from edu.forms import FormCodigo
 from edu.forms import FormAluno
 from edu.forms import FormTurma
-from edu.forms import FormTurmaColegio
-
 from edu.forms import FormResgate
 
 from reportlab.pdfgen import canvas
@@ -186,6 +185,54 @@ def ranking_view(request):
 	return render_to_response("aluno_ranking.html", c)
 
 
+
+def cadastrar_aluno(request):
+	c = RequestContext(request)
+	if request.method=="POST":
+		form = FormAluno(request.POST)
+		turma_colegio = FormColegio(request.POST)
+		if form.is_valid() and turma_colegio.is_valid():
+				dados_form = form.cleaned_data
+				dados_turma = turma_colegio.cleaned_data
+				colegio = Colegio.objects.get(nome=dados_turma['colegio'])
+				print colegio
+
+				turma = colegio.turma_set.get(nome=dados_turma['turma'])
+				novo_aluno = Aluno(username=dados_form['login'], first_name=dados_form['primeiro_nome'],
+							last_name=dados_form['ultimo_nome'], email=dados_form['email'], pontos=0)
+				novo_aluno.set_password(str(dados_form['senha']))
+				novo_aluno.save()
+				turma_aluno = TurmaAluno(aluno=novo_aluno, turma=turma)
+				turma_aluno.save()
+				return HttpResponseRedirect("/")
+		else:
+			c['erro_turma'] = "Este campo é obrigatório."
+			c['form'] = form
+			c['selects'] = FormColegio()
+			return render_to_response("cadastro_aluno.html", c)
+	c['form'] = FormAluno()
+	c['selects'] = FormColegio()
+	#	c['turma']= FormTurmaColegio()
+	return render_to_response("cadastro_aluno.html", c)
+
+
+def get_turmas(request, nome_colegio):
+	
+	
+	if request.is_ajax():
+		c = RequestContext(request)
+		colegio = get_object_or_404(Colegio, nome=nome_colegio)
+		turma = colegio.turma_set.all()
+		#c = HttpResponse()
+		#c.write(turma)
+		c['turma'] = turma
+		return render_to_response("turma_colegio.html", c);
+	else: 
+		return HttpResponse()
+
+
+
+
 class RankingView(generic.ListView):
 	template_name = "aluno_ranking.html"
 	context_object_name = 'alunos'
@@ -202,33 +249,6 @@ class RankingView(generic.ListView):
 		# 	turma=TurmaProfessor.objects.get(professor=usuario).turma
 		turma = Turma.objects.get(nome=self.request.session['turma'])
 		return Aluno.objects.filter(turma=turma)
-
-
-
-
-def cadastrar_aluno(request):
-	c = RequestContext(request)
-	if request.method=="POST":
-		form = FormAluno(request.POST)
-		if form.is_valid():
-				dados = form.cleaned_data
-				colegio = Colegio.objects.get(nome=dados['colegio'])
-				turma = Turma.objects.filter(colegio=colegio)[0]
-				novo_aluno = Aluno(username=dados['login'], first_name=dados['primeiro_nome'],
-							last_name=dados['ultimo_nome'], email=dados['email'], pontos=0)
-				novo_aluno.set_password(str(dados['senha']))
-				novo_aluno.save()
-				turma_aluno = TurmaAluno(aluno=novo_aluno, turma=turma)
-				turma_aluno.save()
-
-				return HttpResponseRedirect("/")
-
-		c['form']= form
-	else:
-		c['form'] = FormAluno()
-	#	c['turma']= FormTurmaColegio()
-	return render_to_response("cadastro_aluno.html", c)
-
 
 def gerar_PDF(response, lista):
 	qtd_codigos = len(lista)  # 6 x 30 = 180 codigos por pagina
@@ -250,15 +270,3 @@ def gerar_PDF(response, lista):
 	# Feche o objeto PDF, e está feito.
 	p.showPage()
 	p.save()
-
-
-def get_turmas(request, nome_colegio):
-	colegio = get_object_or_404(Colegio, nome=nome_colegio)
-	turma = FormTurmaColegio(colegio=colegio)
-	c = RequestContext(request)
-	c = HttpResponse()
-	c.write(turma)
-	#c['turma'] = turma
-	return HttpResponse(c);
-	#return render_to_response("turma_colegio.html",c)
-	#turma = TurmaAluno.objects.filter(colegio=colegio)

@@ -43,14 +43,23 @@
 
 			
 				  
-				{{form.colegio.errors}}
-				{{form.colegio.label}}   {{ form.colegio }}
-			
-			<div id="list_turma">
-				{% if turma %}
-					{{turma.turma.errors}}
-				 	<br>Turma {{ turma.turma }}
-				{%endif%}
+			<!-- {{form.colegio.errors}}
+			{{form.colegio.label}}   {{ form.colegio }}
+			 -->
+			 <div class="listas" id="list_colegio">
+			 	{% if erro_turma %}
+					<ul class="errorlist"><li>{{erro_turma}}</li></ul>
+				{% endif %}
+				{{selects.colegio.label}}
+			 	{{selects.colegio}} 
+			</div>
+			<br>
+			<div class="listas" id="list_turma">
+				{% if erro_turma %}
+					<ul class="errorlist"><li>{{erro_turma}}</li></ul>
+				{% endif %}
+				{{selects.turma.label}}
+				{{selects.turma}}
 			</div>
 			<br>
 			{{form.senha.errors}}
